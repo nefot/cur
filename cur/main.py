@@ -1,12 +1,11 @@
 import os
 
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 
 
 class DataReader:
-    _xls: object = pd.ExcelFile('data.xlsx')
+    _xls: object = pd.ExcelFile(os.curdir +'/cur//data.xlsx')
     _data: dict = pd.read_excel(_xls, sheet_name=None)
 
     def __init__(self, name_region: str = 'Ростовская область'):
