@@ -5,7 +5,7 @@ import pandas as pd
 
 
 class DataReader:
-    _xls: object = pd.ExcelFile(os.curdir +'/cur//data.xlsx')
+    _xls: object = pd.ExcelFile(os.curdir + '//cur//data.xlsx')
     _data: dict = pd.read_excel(_xls, sheet_name=None)
 
     def __init__(self, name_region: str = 'Ростовская область'):
@@ -67,7 +67,7 @@ class DataReader:
                 row_values = sheet_data.iloc[row_index, 1:].tolist()
 
                 # Формируем ключ для словаря
-                key = f"{sheet_name}_{row_index+2}"
+                key = f"{sheet_name}_{row_index + 2}"
 
                 # Сохраняем данные в словаре
                 self._data_dict[key] = row_values
