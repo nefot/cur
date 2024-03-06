@@ -1,6 +1,6 @@
 1. Установить poetry
 
-```shell 
+```
 curl -sSL https://install.python-poetry.org | python -
 ```
 

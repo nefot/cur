@@ -5,7 +5,7 @@ import pandas as pd
 
 
 class DataReader:
-    _xls: object = pd.ExcelFile(os.curdir + '//cur//data.xlsx')
+    _xls: object = pd.ExcelFile('C:\\Users\\artyom\\cur\\cur\\data.xlsx')
     _data: dict = pd.read_excel(_xls, sheet_name=None)
 
     def __init__(self, name_region: str = 'Ростовская область'):
@@ -14,7 +14,12 @@ class DataReader:
         pass
 
     @staticmethod
-    def visualize_and_save_images(data_dict):
+    def visualize_and_save_images(data_dict: dict) -> None:
+        """
+        Метод для визуализации графиков
+        :param data_dict: словарь
+        :return: None
+        """
         # Создаем папку "img", если она не существует
         if not os.path.exists("img"):
             os.makedirs("img")
@@ -77,17 +82,32 @@ class DataReader:
     def outDict(dicts: dict) -> print():
         print(dicts)
 
-    def run(self):
+    def run(self) -> dict:
         dicts = self.genDict()
         self.outDict(dicts)
         self.visualize_and_save_images(dicts)
+        return dicts
 
 
+def deletion(data):
+    pass
+
+
+def median(dictonary):
+    pass
+
+
+
+
+#>60%
 if __name__ == '__main__':
+
+
     rostov = DataReader()
     russia = DataReader(name_region="Российская Федерация")
     ufu = DataReader(name_region="Южный федеральный округ")
 
+    deletion(rostov)
     # russia.run()
     # ufu.run()
     rostov.run()
