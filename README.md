@@ -1,7 +1,7 @@
 1. Установить poetry
 
 ```shell 
-pip install poetry
+curl -sSL https://install.python-poetry.org | python -
 ```
 
 2. Установить виртуальное окружение (в директории проекта)
