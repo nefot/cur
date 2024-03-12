@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,6 +14,7 @@ class DataReader:
         self.name_region: str = name_region
         self._data_dict: dict = {}
         self.vis = visualization
+
         pass
 
     @staticmethod
@@ -84,14 +86,43 @@ class DataReader:
             plt.close(fig)
 
     @staticmethod
-    def describe_value_types(data_dict):
-        type_array = {}
+    def describe_value_types(data_dict: dict) -> dict[Any, list]:
+        type_array: dict[Any, list] = {}
         for key, values in data_dict.items():
             types = [type(value) for value in values]
             type_array[key] = types
         return type_array
 
     # Пример использования функции
+
+    @staticmethod
+    def interpolate_missing_values(data_dict: dict[Any, list]) -> dict[Any, list]:
+        global j
+        for key, values in data_dict.items():
+            # Проходимся по каждому значению
+            for i in range(len(values)):
+                # Если значение равно NaN, то заполняем его линейной интерполяцией
+                if np.isnan(values[i]):
+                    prev_val = None
+                    next_val = None
+                    # Ищем ближайшее предыдущее и следующее не-NaN значение
+                    for j in range(i - 1, -1, -1):
+                        if not np.isnan(values[j]):
+                            prev_val = values[j]
+                            break
+                    for j in range(i + 1, len(values)):
+                        if not np.isnan(values[j]):
+                            next_val = values[j]
+                            break
+                    # Если есть как минимум одно предыдущее и одно следующее значение, выполняем интерполяцию
+                    if prev_val is not None and next_val is not None:
+                        interpolated_val = prev_val + (next_val - prev_val) * (i - j) / (i - j + 1)
+                        values[i] = interpolated_val
+                    elif prev_val is not None:
+                        values[i] = prev_val
+                    elif next_val is not None:
+                        values[i] = next_val
+        return data_dict
 
     def normalization(self):
         pass
@@ -165,6 +196,7 @@ class DataReader:
 
     def run(self) -> dict:
         dicts = self.convert_to_float64(self.filter_data(self.genDict()))
+        # dicts = self.interpolate_missing_values(dicts)
         self.outDict(dicts)
 
         print(self.describe_value_types(dicts))
@@ -183,8 +215,8 @@ def median(dictonary):
 
 if __name__ == '__main__':
     rostov = DataReader(visualization=True)
-    russia = DataReader(name_region="Российская Федерация")
-    ufu = DataReader(name_region="Южный федеральный округ")
+    russia = DataReader(name_region="Российская Федерация", visualization=True)
+    ufu = DataReader(name_region="Южный федеральный округ", visualization=True)
 
     deletion(rostov)
     # russia.run()
