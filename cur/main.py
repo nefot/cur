@@ -7,7 +7,7 @@ import pandas as pd
 
 
 class DataReader:
-    _xls: object = pd.ExcelFile('C:\\Users\\artyom\\cur\\cur\\data_mod.xlsx')
+    _xls: object = pd.ExcelFile(os.path.join(os.getcwd(), 'data_mod.xlsx'))
     _data: dict = pd.read_excel(_xls, sheet_name=None)
 
     def __init__(
@@ -229,7 +229,7 @@ class DataReader:
         return converted_dict
 
     @staticmethod
-    def outDict(dicts: dict) -> print():
+    def outDict(dicts:dict) -> print():
         for i, x in enumerate(dicts):
             print(x, str(dicts[x]).replace('\n', ''))
         print(dicts)
@@ -294,6 +294,6 @@ if __name__ == '__main__':
     ufu = DataReader(name_region="Южный федеральный округ", visualization=True)
 
     deletion(rostov)
-    # russia.run()
-    # ufu.run()
+    russia.run()
+    ufu.run()
     rostov.run()
